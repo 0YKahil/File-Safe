@@ -105,7 +105,7 @@ def main() -> None:
     running = True
     while running:
         action = input("Select an option... \n\n 1) Encrypt Files \n 2) Decrypt Files \n(input number of choice or exit) \n > ")
-        if choice.lower() == "exit":
+        if action.lower() == "exit":
                 running = False
                 quit()
         if action == "1":
