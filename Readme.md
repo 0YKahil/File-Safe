@@ -11,7 +11,7 @@
 ***Disclaimer: The author and contributors of this file encryption script are not responsible for any misuse, unauthorized access, or illegal activities associated with its usage. Users are encouraged to comply with applicable laws, exercise ethical judgment, and assume full accountability for their actions. This script is provided for educational and legitimate purposes only.***
 
 **Usage:**
-- tbd
+- First, place the program in the folder that holds the files you wish to encrypt
 - 
 -
 
