@@ -22,6 +22,10 @@ key = Fernet.generate_key()
 # to not encrypt keys and allow safe decryptions if files were encrypted multiple times
 key_files = []
 
+def decrypt_files(desired_files: list[str]) -> None:
+    pass
+
+
 def select_contents(path: str) -> list[str]:
     """
     returns a list of the names of the files (not folders) in the desired path,
@@ -63,20 +67,24 @@ def encrypt_files(desired_files: list[str]) -> None:
         with open(file, "rb") as desired_file:
             file_contents = desired_file.read()
         encryted_contents = Fernet(key).encrypt(file_contents)
+        
         with open(file, "wb") as desired_file:
             desired_file.write(encryted_contents)
+            
+        print("encrypted")
 
 
-def decrypt_files(desired_files: list[str]) -> None:
-    pass
 
 def main() -> None:
-    print("\t\t**File Encryptor**\n\n")
+    print("\n\t\t\t**File Encryptor**\n\n")
     print("""***Disclaimer: The author and contributors of this file encryption script 
           are not responsible for any misuse, unauthorized access, or 
           illegal activities associated with its usage. Users are encouraged to comply 
           with applicable laws, exercise ethical judgment, and assume full accountability 
           for their actions. 
           This script is provided for educational and legitimate purposes only.***\n\n""")
-    print("Press Enter to continue...\n")
-    path = input("please input your desired directory to encrypt: \n> ")
+    input("Press Enter to continue...\n")
+    path = input("please input your desired directory to encrypt (../path/...): \n> ")
+    encrypt_files(select_contents(path))
+
+main()
