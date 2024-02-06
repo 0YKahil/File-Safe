@@ -30,7 +30,7 @@ def select_contents(path: str) -> list[str]:
     file_list = []
     for file in os.listdir(path):
         # ensuring program does not encrypt itself
-        if file == "file_encrypt.py" or file == "file_encryptor.exe":
+        if file == "file_encrypt.py" or file == "file_encryptor.exe" or file == "file_encrypt.exe":
             continue
         
         # appends any .key file to key_files for track keeping
@@ -107,17 +107,17 @@ def main() -> None:
         action = input("Select an option... \n\n 1) Encrypt Files \n 2) Decrypt Files \n(input number of choice or exit) \n > ")
         if action.lower() == "exit":
                 running = False
-                quit()
+                break
         if action == "1":
             path = input("please input your desired directory to encrypt (../path/...): \n> ")
             choice = input("Are you sure you want to encrypt ALL files at " + path + "? Type 'AGREE' to continue\n > ")
             if choice.lower() == "exit":
                 running = False
-                quit()
+                break
             if choice != "AGREE":
                 print("did not recieve 'AGREE'")
                 running = False
-                
+                break
             else:
                 print(select_contents(path))
                 encrypt_files(select_contents(path))
@@ -129,10 +129,11 @@ def main() -> None:
             choice = input("Are you sure you want to decrypt ALL files at" + path + "? Type 'AGREE' to continue\n > ")
             if choice.lower() == "exit":
                 running = False
-                quit()
+                break
             if choice != "AGREE":
                 print("did not recieve 'AGREE'")
                 running = False
+                break
             else:
                 try:
                     print(select_contents(path))
