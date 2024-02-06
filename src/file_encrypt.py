@@ -125,11 +125,11 @@ def main() -> None:
                 break
 
         if action == "2":
+            path = input("please input your desired directory to decrypt (../path/...): \n> ")
+            choice = input("Are you sure you want to decrypt ALL files at" + path + "? Type 'AGREE' to continue\n > ")
             if choice.lower() == "exit":
                 running = False
                 quit()
-            path = input("please input your desired directory to decrypt (../path/...): \n> ")
-            choice = input("Are you sure you want to decrypt ALL files at" + path + "? Type 'AGREE' to continue\n > ")
             if choice != "AGREE":
                 print("did not recieve 'AGREE'")
                 running = False
