@@ -1,9 +1,9 @@
-# File Encryptor
+# File Safe
 
 ## File encrypting script
 
 **Description**:
-- File encryptor is a basic script that encrypts the file (not folder) contents of a given directory
+- File Safe is a basic script that encrypts the file (not folder) contents of a given directory
 - The script will make use of the cryptography's fernet api to generate a key used to unlock the encrypted files
 - The file encryptor will take a passcode before use and this passcode will be used to access the decryption key and decrypt the files using the decryption script
 
